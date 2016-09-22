@@ -23,6 +23,7 @@ Requires:   python-babel
 Requires:   python-oslo-config
 Requires:   python-oslo-log
 Requires:   python-six
+Requires:   python-tempest >= 10.0.0
 
 %description
 This package contains Tempest tests to cover the Horizon project.
