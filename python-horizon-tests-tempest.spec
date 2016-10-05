@@ -50,3 +50,4 @@ rm -f *requirements.txt
 %{python2_sitelib}/*.egg-info
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/tempest-horizon/commit/?id=b6f352de92a3f1a588e88afac936ec230592947f
