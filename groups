@@ -1,5 +1,5 @@
-# UUID          Group Name
-False 	Non-Interactive Users
-83965690b93c79803fadbb87a056a450f1be2937       	openstack/tempest-horizon-distgit-core
-5e75ce44f26d151d1e912a8c80f6fe1dbc081986        	openstack/tempest-horizon-distgit-ptl
-global:Registered-Users		Registered Users
+# UUID                                  	Group Name
+#
+5e75ce44f26d151d1e912a8c80f6fe1dbc081986	openstack/tempest-horizon-distgit-ptl
+83965690b93c79803fadbb87a056a450f1be2937	openstack/tempest-horizon-distgit-core
+global:Registered-Users                 	Registered Users
