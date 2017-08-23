@@ -19,12 +19,12 @@ BuildRequires:  python-pbr
 BuildRequires:  python-setuptools
 BuildRequires:  git
 
-Requires:   python-pbr
-Requires:   python-babel
-Requires:   python-oslo-config
-Requires:   python-oslo-log
-Requires:   python-six
-Requires:   python-tempest >= 10.0.0
+Requires:   python-pbr >= 2.0.0
+Requires:   python-babel >= 2.3.4
+Requires:   python-oslo-config >= 2:4.0.0
+Requires:   python-oslo-log >= 3.22.0
+Requires:   python-six >= 1.9.0
+Requires:   python-tempest >= 12.1.0
 
 %description
 This package contains Tempest tests to cover the Horizon project.
