@@ -1,16 +1,21 @@
-%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+%{!?upstream_version: %global upstream_version %{commit}}
+%global commit 51995f7fd549b9316b6731fc6ecdd37f23ca7212
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+# DO NOT REMOVE ALPHATAG
+%global alphatag .%{shortcommit}git
+
 %global service horizon
 %global plugin tempest-horizon
 %global module tempest_horizon
 
 Name:       python-%{service}-tests-tempest
-Version:    XXX
-Release:    XXX
+Version:    0.0.1
+Release:    0.1%{?alphatag}%{?dist}
 Summary:    Tempest Integration of Horizon
 License:    ASL 2.0
 URL:        https://github.com/openstack/%{plugin}/
 
-Source0:    https://tarballs.openstack.org/%{plugin}/%{plugin}-%{upstream_version}.tar.gz
+Source0:    https://github.com/openstack/%{plugin}/archive/%{commit}.tar.gz#/%{plugin}-%{shortcommit}.tar.gz
 
 BuildArch:  noarch
 
@@ -50,3 +55,5 @@ rm -f *requirements.txt
 %{python2_sitelib}/*.egg-info
 
 %changelog
+* Wed Aug 30 2017 Chandan Kumar <chkumar@redhat.com> 0.0.1-0.1.51995f7fgit
+- Update to pre-release 0.0.1 (51995f7fd549b9316b6731fc6ecdd37f23ca7212)
