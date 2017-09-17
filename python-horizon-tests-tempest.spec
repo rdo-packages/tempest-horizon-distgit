@@ -18,6 +18,7 @@ BuildRequires:  python2-devel
 BuildRequires:  python-pbr
 BuildRequires:  python-setuptools
 BuildRequires:  git
+BuildRequires:  openstack-macros
 
 Requires:   python-pbr >= 2.0.0
 Requires:   python-babel >= 2.3.4
@@ -35,7 +36,7 @@ into tempest.
 %autosetup -n %{plugin}-%{upstream_version} -S git
 
 # Let's handle dependencies ourseleves
-rm -f *requirements.txt
+%py_req_cleanup
 
 %build
 %py2_build
