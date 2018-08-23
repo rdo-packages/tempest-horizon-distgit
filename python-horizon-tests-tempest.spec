@@ -1,4 +1,9 @@
-%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+%{!?upstream_version: %global upstream_version %{commit}}
+%global commit 6490739059135e05b7fee75ee083701b4c8aa097
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+# DO NOT REMOVE ALPHATAG
+%global alphatag .%{shortcommit}git
+
 %global service horizon
 %global plugin tempest-horizon
 %global module tempest_horizon
@@ -13,13 +18,13 @@ Additionally it provides a plugin to automatically load these tests \
 into tempest.
 
 Name:       python-%{service}-tests-tempest
-Version:    XXX
-Release:    XXX
+Version:    0.0.1
+Release:    0.2%{?alphatag}%{?dist}
 Summary:    Tempest Integration of Horizon
 License:    ASL 2.0
 URL:        https://github.com/openstack/%{plugin}/
 
-Source0:    https://tarballs.openstack.org/%{plugin}/%{plugin}-%{upstream_version}.tar.gz
+Source0:    http://github.com/openstack/%{plugin}/archive/%{commit}.tar.gz#/%{plugin}-%{shortcommit}.tar.gz
 
 BuildArch:  noarch
 BuildRequires:  git
@@ -99,3 +104,5 @@ Requires:   python3-tempest >= 1:18.0.0
 %endif
 
 %changelog
+* Thu Aug 23 2018 Chandan Kumar <chkumar@redhat.com> 0.0.1-0.2.64907390git
+- Update to pre-release 0.0.1 (6490739059135e05b7fee75ee083701b4c8aa097)
