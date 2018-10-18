@@ -1,11 +1,18 @@
+# Macros for py2/py3 compatibility
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
+%endif
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service horizon
 %global plugin tempest-horizon
 %global module tempest_horizon
-
-%if 0%{?fedora}
-%global with_python3 1
-%endif
 
 %global common_desc \
 This package contains Tempest tests to cover the Horizon project. \
@@ -28,41 +35,22 @@ BuildRequires:  openstack-macros
 %description
 %{common_desc}
 
-%package -n python2-%{service}-tests-tempest
+%package -n python%{pyver}-%{service}-tests-tempest
 Summary: %{summary}
-%{?python_provide:%python_provide python2-%{service}-tests-tempest}
-BuildRequires:  python2-devel
-BuildRequires:  python2-pbr
-BuildRequires:  python2-setuptools
+%{?python_provide:%python_provide python%{pyver}-%{service}-tests-tempest}
+BuildRequires:  python%{pyver}-devel
+BuildRequires:  python%{pyver}-pbr
+BuildRequires:  python%{pyver}-setuptools
 
-Requires:   python2-pbr >= 3.1.1
-Requires:   python2-babel >= 2.3.4
-Requires:   python2-oslo-config >= 2:5.2.0
-Requires:   python2-oslo-log >= 3.36.0
-Requires:   python2-six >= 1.10.0
-Requires:   python2-tempest >= 1:18.0.0
+Requires:   python%{pyver}-pbr >= 3.1.1
+Requires:   python%{pyver}-babel >= 2.3.4
+Requires:   python%{pyver}-oslo-config >= 2:5.2.0
+Requires:   python%{pyver}-oslo-log >= 3.36.0
+Requires:   python%{pyver}-six >= 1.10.0
+Requires:   python%{pyver}-tempest >= 1:18.0.0
 
-%description -n python2-%{service}-tests-tempest
+%description -n python%{pyver}-%{service}-tests-tempest
 %{common_desc}
-
-%if 0%{?with_python3}
-%package -n python3-%{service}-tests-tempest
-Summary: %{summary}
-%{?python_provide:%python_provide python3-%{service}-tests-tempest}
-BuildRequires:  python3-devel
-BuildRequires:  python3-pbr
-BuildRequires:  python3-setuptools
-
-Requires:   python3-pbr >= 3.1.1
-Requires:   python3-babel >= 2.3.4
-Requires:   python3-oslo-config >= 2:5.2.0
-Requires:   python3-oslo-log >= 3.36.0
-Requires:   python3-six >= 1.10.0
-Requires:   python3-tempest >= 1:18.0.0
-
-%description -n python3-%{service}-tests-tempest
-%{common_desc}
-%endif
 
 %prep
 %autosetup -n %{plugin}-%{upstream_version} -S git
@@ -71,31 +59,15 @@ Requires:   python3-tempest >= 1:18.0.0
 %py_req_cleanup
 
 %build
-%py2_build
-
-%if 0%{?with_python3}
-%py3_build
-%endif
+%{pyver_build}
 
 %install
-%py2_install
+%{pyver_install}
 
-%if 0%{?with_python3}
-%py3_install
-%endif
-
-%files -n python2-%{service}-tests-tempest
+%files -n python%{pyver}-%{service}-tests-tempest
 %doc README.rst
 %license LICENSE
-%{python2_sitelib}/%{module}
-%{python2_sitelib}/*.egg-info
-
-%if 0%{?with_python3}
-%files -n python3-%{service}-tests-tempest
-%doc README.rst
-%license LICENSE
-%{python3_sitelib}/%{module}
-%{python3_sitelib}/*.egg-info
-%endif
+%{pyver_sitelib}/%{module}
+%{pyver_sitelib}/*.egg-info
 
 %changelog
