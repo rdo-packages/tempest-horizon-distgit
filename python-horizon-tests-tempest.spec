@@ -1,3 +1,5 @@
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service horizon
 %global plugin tempest-horizon
@@ -10,14 +12,24 @@ into tempest.
 
 Name:       python-%{service}-tests-tempest
 Version:    1.1.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Tempest Integration of Horizon
 License:    ASL 2.0
 URL:        https://github.com/openstack/%{plugin}/
 
 Source0:    https://tarballs.openstack.org/%{plugin}/%{plugin}-%{upstream_version}.tar.gz
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/%{plugin}/%{plugin}-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 BuildArch:  noarch
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 BuildRequires:  git
 BuildRequires:  openstack-macros
 
@@ -39,6 +51,10 @@ Requires:   python3-tempest >= 1:18.0.0
 %{common_desc}
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n %{plugin}-%{upstream_version} -S git
 
 # Let's handle dependencies ourseleves
@@ -57,6 +73,9 @@ Requires:   python3-tempest >= 1:18.0.0
 %{python3_sitelib}/*.egg-info
 
 %changelog
+* Wed Oct 21 2020 Joel Capitao <jcapitao@redhat.com> 1.1.0-2
+- Enable sources tarball validation using GPG signature.
+
 * Thu Oct 01 2020 RDO <dev@lists.rdoproject.org> 1.1.0-1
 - Update to 1.1.0
 
