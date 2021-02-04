@@ -73,3 +73,4 @@ Requires:   python3-tempest >= 1:18.0.0
 %{python3_sitelib}/*.egg-info
 
 %changelog
+# REMOVEME: error caused by commit https://opendev.org/openstack/tempest-horizon/commit/6883d8ff5a1cc2c20b4fea7b58ba8fcda12ec035
